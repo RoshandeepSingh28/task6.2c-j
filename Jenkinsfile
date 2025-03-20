@@ -13,7 +13,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Build Stage Completed',
                          body: 'The build stage has completed. Check Jenkins logs for details.'
                 }
@@ -26,7 +26,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Unit and Integration Tests Completed',
                          body: 'The unit and integration tests have completed. Check Jenkins logs for details.'
                 }
@@ -39,7 +39,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Code Analysis Completed',
                          body: 'The code analysis stage has completed. Check Jenkins logs for details.'
                 }
@@ -52,7 +52,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Security Scan Completed',
                          body: 'The security scan has completed. Check the Jenkins logs for details.'
                 }
@@ -65,7 +65,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Deployment to Staging Completed',
                          body: 'Deployment to the staging environment has completed. Check Jenkins logs for details.'
                 }
@@ -78,7 +78,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Integration Tests on Staging Completed',
                          body: 'Integration tests on staging have completed. Check Jenkins logs for details.'
                 }
@@ -91,7 +91,7 @@ pipeline {
             }
             post {
                 always {
-                    mail to: "${USER_EMAIL}",
+                    mail to: USER_EMAIL,
                          subject: 'Deployment to Production Completed',
                          body: 'Deployment to production has completed. Check Jenkins logs for details.'
                 }
@@ -102,15 +102,15 @@ pipeline {
     post {
         success {
             echo 'Pipeline executed successfully!'
-            mail to: "${USER_EMAIL}",
+            mail to: USER_EMAIL,
                  subject: 'Pipeline Execution Successful',
                  body: 'The entire pipeline has completed successfully.'
         }
         failure {
             echo 'Pipeline failed! Check the logs for more details.'
-            mail to: "${USER_EMAIL}",
+            mail to: USER_EMAIL,
                  subject: 'Pipeline Execution Failed',
                  body: 'The pipeline has failed. Please check the Jenkins logs for more details.'
-        }
-    }
+        }
+    }
 }
