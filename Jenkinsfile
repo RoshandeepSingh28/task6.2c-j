@@ -1,45 +1,60 @@
 pipeline {
     agent any
-
+    
     environment {
-        EMAIL_RECIPIENT = 'roshandeepsingh75@gmail.com'
+        EMAIL_RECIPIENT = 'ansh4764.be23@chitkara.edu.in'
+        USER_EMAIL = 'ansh4764.be23@chiutkara.edu.in'
     }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                echo 'mvn clean package' // Use Maven as a build tool
+            }
+            post {
+                always {
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Build Stage Completed',
+                         body: 'The build stage has completed. Check Jenkins logs for details.'
+                }
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests...'
-                echo 'mvn test'
+            }
+            post {
+                always {
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Unit and Integration Tests Completed',
+                         body: 'The unit and integration tests have completed. Check Jenkins logs for details.'
+                }
             }
         }
 
         stage('Code Analysis') {
             steps {
                 echo 'Performing static code analysis...'
-                echo 'mvn sonar:sonar' // Uses SonarQube for code analysis
+            }
+            post {
+                always {
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Code Analysis Completed',
+                         body: 'The code analysis stage has completed. Check Jenkins logs for details.'
+                }
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Running security scan...'
-                echo 'mvn dependency-check:check' // OWASP Dependency Check
+                echo 'Performing security scan...'
             }
             post {
                 always {
-                    emailext(
-                        subject: 'Jenkins Security Scan Results',
-                        body: 'Security scan completed. Check the logs for details.',
-                        to: "${EMAIL_RECIPIENT}",
-                        attachLog: true
-                    )
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Security Scan Completed',
+                         body: 'The security scan has completed. Check the Jenkins logs for details.'
                 }
             }
         }
@@ -47,33 +62,56 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to staging environment...'
-                echo 'scp target/*.war user@staging-server:/path/to/deploy'
+            }
+            post {
+                always {
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Deployment to Staging Completed',
+                         body: 'Deployment to the staging environment has completed. Check Jenkins logs for details.'
+                }
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging...'
-                echo 'curl -X GET http://staging-server/api/health-check'
+            }
+            post {
+                always {
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Integration Tests on Staging Completed',
+                         body: 'Integration tests on staging have completed. Check Jenkins logs for details.'
+                }
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production server...'
-                echo 'scp target/*.war user@production-server:/path/to/deploy'
+                echo 'Deploying to production...'
+            }
+            post {
+                always {
+                    mail to: "${USER_EMAIL}",
+                         subject: 'Deployment to Production Completed',
+                         body: 'Deployment to production has completed. Check Jenkins logs for details.'
+                }
             }
         }
     }
 
     post {
-        always {
-            emailext(
-                subject: 'Jenkins Build Notification',
-                body: "Pipeline execution completed. Check Jenkins for details.",
-                to: "${EMAIL_RECIPIENT}",
-                attachLog: true
-            )
+        success {
+            echo 'Pipeline executed successfully!'
+            mail to: "${USER_EMAIL}",
+                 subject: 'Pipeline Execution Successful',
+                 body: 'The entire pipeline has completed successfully.'
+                 attachLog: true
+        }
+        failure {
+            echo 'Pipeline failed! Check the logs for more details.'
+            mail to: "${USER_EMAIL}",
+                 subject: 'Pipeline Execution Failed',
+                 body: 'The pipeline has failed. Please check the Jenkins logs for more details.'
         }
     }
 }
