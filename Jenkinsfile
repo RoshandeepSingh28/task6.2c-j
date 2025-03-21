@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    
+
     environment {
         EMAIL_RECIPIENT = 'roshandeepsingh75@gmail.com'
-        USER_EMAIL = 'roshandeepsingh75@gmail.com'
+        USER_EMAIL = 'roshandeepsingh75@gmail.com'  
     }
 
     stages {
@@ -102,10 +102,10 @@ pipeline {
     post {
         success {
             echo 'Pipeline executed successfully!'
-            mail to: "${USER_EMAIL}",
-                 subject: 'Pipeline Execution Successful',
-                 body: 'The entire pipeline has completed successfully.'
-                 attachLog: true
+            emailext to: "${USER_EMAIL}",
+                     subject: 'Pipeline Execution Successful',
+                     body: 'The entire pipeline has completed successfully.',
+                     attachLog: true  // Fixed syntax for log attachment
         }
         failure {
             echo 'Pipeline failed! Check the logs for more details.'
