@@ -59,7 +59,6 @@ pipeline {
                     mail to: "${USER_EMAIL}",
                          subject: 'Security Scan Completed',
                          body: 'The security scan has completed. Check the Jenkins logs for details.'
-                    }
                 }
             }
         }
@@ -107,7 +106,7 @@ pipeline {
                 }
             }
         }
-    
+    }
 
     post {
         success {
