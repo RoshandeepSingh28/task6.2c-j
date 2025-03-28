@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'react-app'
-        DOCKER_CONTAINER = 'react-container'
-        STAGING_SERVER = 'staging.example.com'
-        PRODUCTION_SERVER = 'production.example.com'
+        
         EMAIL_RECIPIENT = 'roshandeepsingh75@gmail.com'
     }
 
