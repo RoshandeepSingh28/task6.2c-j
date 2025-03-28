@@ -20,7 +20,7 @@ pipeline {
                 always {
                     mail to: "${EMAIL_RECIPIENT}",
                          subject: 'Build Stage Completed',
-                         body: 'React application build is complete.'
+                         body: 'React application build iomplete.'
                 }
             }
         }
