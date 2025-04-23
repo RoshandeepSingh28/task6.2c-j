@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building the React application...' 
+                echo 'Building the React application..' 
                 echo 'Task: Install dependencies using npm/yarn and build the React app using Webpack or Vite.'
                 echo 'Tool Used: npm'
             }
